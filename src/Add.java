@@ -5,14 +5,15 @@ import java.util.Scanner;
 public class Add {
     public static void addTask() throws IOException {
 
-        int isContinue = 1;
-        while (isContinue == 1) {
+        boolean isStop = false;
+        while (!isStop) {
             Scanner input = new Scanner(System.in);
             System.out.print("Add something u want to do: ");
             String task = input.nextLine();
 
             try {
-                BufferedWriter write_file = new BufferedWriter(new FileWriter("D:/Workspace/Java/Todo_List/db/DB.txt", true));
+                //Add task to file
+                BufferedWriter write_file = new BufferedWriter(new FileWriter("DB.txt", true));
                 write_file.write(task);
                 write_file.newLine();
                 write_file.close();
@@ -29,13 +30,9 @@ public class Add {
                     } else {
                         isCorrect = true;
                         if (choose == 0) {
-                            isContinue = 0;
+                            isStop = true;
                             Main.mainMenu();
-                            break;
-                        } else {
-                            break;
                         }
-
                     }
                 } catch (InputMismatchException e) {
                     System.out.println("u should input 0 or 1");

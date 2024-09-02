@@ -9,6 +9,17 @@ public class See {
             System.out.println(num+": "+str);
             num+=1;
         }
+        System.out.println();
+        System.out.println("Tasks u have done:");
+
+        int num2 = 1;
+        for (String str : Main.Data()) {
+            if (Integer.toString(num2).matches(Check.ListDoneTask())) {
+                System.out.println(num2+": "+str);
+            }
+            num2+=1;
+        }
+        System.out.println();
         System.out.println("Press 0 to exit!!!");
         Scanner input = new Scanner(System.in);
         try {

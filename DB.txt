@@ -1,4 +1,3 @@
-java
-just
-do
-it
+learn java
+make a todo list app
+learn OOP

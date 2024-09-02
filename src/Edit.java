@@ -1,21 +1,21 @@
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Delete {
-    public static void DeleteTask() {
+public class Edit {
+    public static void EditTask() throws IOException {
         boolean isStop = false;
         while (!isStop) {
             try {
                 boolean isAccept = false;
                 int id = 1;
-
-                //Check id if the id user input isn't in range of data's length
                 while (!isAccept) {
-                    System.out.print("Input task id u want delete: ");
+                    System.out.print("Input task id u want edit: ");
                     Scanner scanId = new Scanner(System.in);
                     int i = scanId.nextInt();
-                    System.out.println(Main.Data().length);
                     if (i>0 && i <=Main.Data().length) {
                         id = i;
                         isAccept = true;
@@ -24,30 +24,36 @@ public class Delete {
                         System.out.println("Try again!!!");
                     }
                 }
+                System.out.print("Change to: ");
+                Scanner scanChange = new Scanner(System.in);
+                String change = scanChange.nextLine();
+
+                FileWriter temp = new FileWriter("temp.txt", true);
+                BufferedWriter buffereTemp = new BufferedWriter(temp);
+
                 int current = 1;
-                BufferedWriter BufferTemp = new BufferedWriter(new FileWriter("temp.txt", true));
-
                 for (String str : Main.Data()) {
-                    if (current == id) {
-                        current+=1;
-                        continue;
+                    if (current != id) {
+                        buffereTemp.write(str);
                     } else {
-                        BufferTemp.write(str);
-                        BufferTemp.newLine();
+                        buffereTemp.write(change);
                     }
-                    current+=1;
+                    buffereTemp.newLine();
+                    current++;
                 }
-                BufferTemp.close();
 
-                File curFile = new File("DB.txt");
-                if (curFile.delete()) {  //Delete data current file
-                    File cur = new File("DB.txt"); //Create a blank file
-                    File tempFile = new File("temp.txt"); //temp file
-                    if (tempFile.renameTo(cur)) { //Change the temp file's name to blank file's name
-                        System.out.println("Delete successfully");
+                buffereTemp.close();
+                temp.close();
 
+                File db = new File("DB.txt");
+                if (db.delete()) { //Delete data current file
+                    File newFile = new File("DB.txt"); //Create a blank file have name like data file's name
+                    File tempFile = new File("temp.txt"); //Temp file
+                    if (tempFile.renameTo(newFile)) {  //Change the temp file's name to blank file's name
+                        System.out.println("Change successfully");
                         System.out.println("Do u want check more? (1: Yes  0: No) ");
                         boolean isCorrect = false;
+
                         try {
                             Scanner bl = new Scanner(System.in);
                             int choose = bl.nextInt();
@@ -63,16 +69,11 @@ public class Delete {
                         } catch (InputMismatchException e) {
                             System.out.println("u should input 0 or 1");
                         }
-                    } else {
-                        System.out.println("cant delete");
                     }
                 }
 
-
-            } catch (InputMismatchException e) {
-                System.out.print("got error");
             } catch (IOException e) {
-                System.out.print("got IOException error");
+                System.out.println("got IOException error");
             }
         }
     }

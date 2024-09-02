@@ -12,9 +12,10 @@ public class Main {
         BufferedReader read_file = new BufferedReader(new FileReader("DB.txt"));
         String line = read_file.readLine();
 
+        //Get all line from file to an array
         while (line != null) {
-            ListArray.add(line);
-            line = read_file.readLine();
+            ListArray.add(line); //Add to array
+            line = read_file.readLine();  //continue get next line
         }
         read_file.close();
 
@@ -23,22 +24,22 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         System.out.println("Hello, welcome to ToDo List app");
-        System.out.println(" ");
         mainMenu();
     }
 
     public static void mainMenu() throws IOException {
+        // Call data that every time you exit
+        //If u not call it, the data will not change when u add or remove
         Data();
 
         Scanner userImport = new Scanner(System.in);
         System.out.println(" ");
         System.out.println(" ");
-        System.out.println(" ");
-        System.out.println(" ");
         System.out.println("1: See list ");
         System.out.println("2: Add");
         System.out.println("3: Check done");
-        System.out.println("4: Remove");
+        System.out.println("4: Edit task");
+        System.out.println("5: Remove");
         System.out.println("0: Out");
         int choose = userImport.nextInt();
 
@@ -49,7 +50,13 @@ public class Main {
             case 2:
                 Add.addTask();
                 break;
+            case 3:
+                Check.CheckTask();
+                break;
             case 4:
+                Edit.EditTask();
+                break;
+            case 5:
                 Delete.DeleteTask();
                 break;
             case 0:
